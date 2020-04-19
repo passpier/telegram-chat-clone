@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1335B5244BF38900D7E3B6 /* ProfileInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1335B4244BF38900D7E3B6 /* ProfileInputView.swift */; };
+		1F16B231244AFEFC009626D4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B230244AFEFC009626D4 /* SignUpViewController.swift */; };
+		1F16B234244B0162009626D4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B233244B0162009626D4 /* SignInViewController.swift */; };
+		1F16B239244B0F7E009626D4 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B238244B0F7E009626D4 /* UIColor+Hex.swift */; };
+		1F16B23C244B6EE0009626D4 /* ThemeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B23B244B6EE0009626D4 /* ThemeSettings.swift */; };
 		1F1AE2A3244938E600558B68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2A2244938E600558B68 /* AppDelegate.swift */; };
 		1F1AE2A5244938E600558B68 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2A4244938E600558B68 /* SceneDelegate.swift */; };
 		1F1AE2A7244938E600558B68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2A6244938E600558B68 /* ViewController.swift */; };
@@ -24,6 +29,11 @@
 /* Begin PBXFileReference section */
 		0473D4F0D94F2E032219A2A2 /* Pods_tgChatClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tgChatClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A436586A21AF2C216E7A1EC /* Pods-tgChatClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tgChatClone.debug.xcconfig"; path = "Target Support Files/Pods-tgChatClone/Pods-tgChatClone.debug.xcconfig"; sourceTree = "<group>"; };
+		1F1335B4244BF38900D7E3B6 /* ProfileInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInputView.swift; sourceTree = "<group>"; };
+		1F16B230244AFEFC009626D4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		1F16B233244B0162009626D4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		1F16B238244B0F7E009626D4 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		1F16B23B244B6EE0009626D4 /* ThemeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettings.swift; sourceTree = "<group>"; };
 		1F1AE29F244938E600558B68 /* tgChatClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tgChatClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F1AE2A2244938E600558B68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F1AE2A4244938E600558B68 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +62,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F1335B3244BF36700D7E3B6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1F1335B4244BF38900D7E3B6 /* ProfileInputView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1F16B22F244AF969009626D4 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				1F16B230244AFEFC009626D4 /* SignUpViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		1F16B232244B0145009626D4 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				1F16B233244B0162009626D4 /* SignInViewController.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		1F16B235244B0D99009626D4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1F16B238244B0F7E009626D4 /* UIColor+Hex.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1F16B23A244B6EBD009626D4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1F16B23B244B6EE0009626D4 /* ThemeSettings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		1F1AE296244938E600558B68 = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +123,9 @@
 		1F1AE2A1244938E600558B68 /* tgChatClone */ = {
 			isa = PBXGroup;
 			children = (
+				1F1335B3244BF36700D7E3B6 /* Views */,
+				1F16B23A244B6EBD009626D4 /* Settings */,
+				1F16B235244B0D99009626D4 /* Extensions */,
 				1F1AE2B824495C7000558B68 /* Controllers */,
 				1F1AE2B62449464D00558B68 /* GoogleService-Info.plist */,
 				1F1AE2A2244938E600558B68 /* AppDelegate.swift */,
@@ -89,6 +142,8 @@
 		1F1AE2B824495C7000558B68 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1F16B232244B0145009626D4 /* SignIn */,
+				1F16B22F244AF969009626D4 /* SignUp */,
 				1F1AE2BD2449672900558B68 /* Settings */,
 				1F1AE2BC2449671C00558B68 /* Chats */,
 				1F1AE2BB2449670600558B68 /* Contacts */,
@@ -255,12 +310,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F1AE2A7244938E600558B68 /* ViewController.swift in Sources */,
+				1F1335B5244BF38900D7E3B6 /* ProfileInputView.swift in Sources */,
 				1F1AE2BA2449650E00558B68 /* RootTabBarController.swift in Sources */,
+				1F16B231244AFEFC009626D4 /* SignUpViewController.swift in Sources */,
+				1F16B23C244B6EE0009626D4 /* ThemeSettings.swift in Sources */,
 				1F1AE2C3244967A600558B68 /* SettingsViewController.swift in Sources */,
 				1F1AE2A3244938E600558B68 /* AppDelegate.swift in Sources */,
+				1F16B234244B0162009626D4 /* SignInViewController.swift in Sources */,
 				1F1AE2A5244938E600558B68 /* SceneDelegate.swift in Sources */,
 				1F1AE2C12449679700558B68 /* ChatsViewController.swift in Sources */,
 				1F1AE2BF2449678800558B68 /* ContactsViewController.swift in Sources */,
+				1F16B239244B0F7E009626D4 /* UIColor+Hex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
