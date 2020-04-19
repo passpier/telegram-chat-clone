@@ -12,6 +12,7 @@ class ProfileInputView: UIView {
 
     private let placeHolder: String
     private let icon: UIImage
+    private let isSecureText: Bool
     
     private lazy var iconContainer: UIView = {
         let c = UIView()
@@ -30,13 +31,15 @@ class ProfileInputView: UIView {
     private lazy var inputField: UITextField = {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.isSecureTextEntry = isSecureText
         tf.attributedPlaceholder = NSAttributedString(string: placeHolder, attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0xB0, green: 0xB0, blue: 0xB0)])
         return tf
     }()
     
-    init(placeholder: String, icon: UIImage) {
+    init(placeholder: String, icon: UIImage, isSecureText: Bool = false) {
         self.placeHolder = placeholder
         self.icon = icon
+        self.isSecureText = isSecureText
         super.init(frame: .zero)
         setupUI()
     }

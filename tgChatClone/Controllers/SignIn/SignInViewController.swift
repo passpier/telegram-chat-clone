@@ -37,13 +37,13 @@ class SignInViewController: UIViewController {
     }()
     
     private lazy var passwordContainer: UIView = {
-        let v = ProfileInputView(placeholder: "Password", icon: #imageLiteral(resourceName: "ic_lock_outline_white"))
+        let v = ProfileInputView(placeholder: "Password", icon: #imageLiteral(resourceName: "ic_lock_outline_white"), isSecureText: true)
         v.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return v
     }()
     
     private lazy var loginButton: UIButton = {
-        let btn = UIButton()
+        let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.backgroundColor = UIColor(red: 0x17, green: 0x98, blue: 0xc9)
         btn.setTitle("Log in", for: .normal)
@@ -57,38 +57,21 @@ class SignInViewController: UIViewController {
         return btn
     }()
     
+    private lazy var signUpButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("SignUp", for: .normal)
+        btn.setTitleColor(UIColor(red: 0x17, green: 0x98, blue: 0xc9), for: .normal)
+        btn.addTarget(self, action: #selector(signUpBtnPressed), for: .touchUpInside)
+        return btn
+    }()
+    
     private lazy var signUpLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Not a member?"
         label.textColor = UIColor(red: 0xB0, green: 0xB0, blue: 0xB0)
         return label
-    }()
-    
-    private lazy var signUpHint: UIView = {
-        let cv = UIView()
-        cv.translatesAutoresizingMaskIntoConstraints = false
-    
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Not a member?"
-        label.textColor = UIColor(red: 0xB0, green: 0xB0, blue: 0xB0)
-        
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("SignUp", for: .normal)
-        btn.setTitleColor(UIColor(red: 0x17, green: 0x98, blue: 0xc9), for: .normal)
-        
-        cv.addSubview(label)
-        cv.addSubview(btn)
-        NSLayoutConstraint.activate([
-            label.leftAnchor.constraint(equalTo: cv.leftAnchor),
-            label.heightAnchor.constraint(equalToConstant: 50),
-            btn.leftAnchor.constraint(equalTo: label.rightAnchor, constant: 10),
-            btn.rightAnchor.constraint(equalTo: cv.rightAnchor),
-            btn.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        return cv
     }()
     
     override func viewDidLoad() {
@@ -105,6 +88,11 @@ class SignInViewController: UIViewController {
         stack.setCustomSpacing(60, after: titleLabel)
         stack.spacing = 10
         
+        let signUpHint = UIStackView(arrangedSubviews: [signUpLabel, signUpButton])
+        signUpHint.translatesAutoresizingMaskIntoConstraints = false
+        signUpHint.axis = .horizontal
+        signUpHint.spacing = 5
+        
         view.addSubview(loginImageView)
         view.addSubview(stack)
         view.addSubview(signUpHint)
@@ -120,7 +108,12 @@ class SignInViewController: UIViewController {
             stack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
             
             signUpHint.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signUpHint.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+            signUpHint.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)
         ])
     }
+    
+    @objc private func signUpBtnPressed() {
+        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+    
 }
