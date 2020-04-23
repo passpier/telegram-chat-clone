@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SignInViewController: UIViewController {
 
+    private var viewModel: SignInViewModel?
+    
+    private let disposeBag = DisposeBag()
+    
     private lazy var loginImageView: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -30,13 +36,13 @@ class SignInViewController: UIViewController {
         return label
     }()
     
-    private lazy var emailContainer: UIView = {
+    private lazy var emailContainer: ProfileInputView = {
         let v = ProfileInputView(placeholder: "Email", icon: #imageLiteral(resourceName: "ic_mail_outline_white"))
         v.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return v
     }()
     
-    private lazy var passwordContainer: UIView = {
+    private lazy var passwordContainer: ProfileInputView = {
         let v = ProfileInputView(placeholder: "Password", icon: #imageLiteral(resourceName: "ic_lock_outline_white"), isSecureText: true)
         v.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return v
@@ -60,9 +66,8 @@ class SignInViewController: UIViewController {
     private lazy var signUpButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("SignUp", for: .normal)
+        btn.setTitle("Sign Up", for: .normal)
         btn.setTitleColor(UIColor(red: 0x17, green: 0x98, blue: 0xc9), for: .normal)
-        btn.addTarget(self, action: #selector(signUpBtnPressed), for: .touchUpInside)
         return btn
     }()
     
@@ -76,7 +81,29 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
         setupView()
+    }
+    
+    private func bindViewModel() {
+        let authService: AuthProtocol = AuthService()
+        viewModel = SignInViewModel(email: emailContainer.inputField.rx.text.orEmpty.asDriver(), password: passwordContainer.inputField.rx.text.orEmpty.asDriver(), loginTap: loginButton.rx.tap.asSignal(), authService: authService)
+        
+        viewModel?.signedIn
+        .drive(onNext: { [weak self] signedIn in
+            print("User signed in \(signedIn)")
+            if !signedIn {
+                let controller = UIAlertController(title: "Verification Failed", message: "Your email or password is incorrect.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                controller.addAction(okAction)
+                self?.present(controller, animated: true, completion: nil)
+            }
+        })
+        .disposed(by: disposeBag)
+        let signUpTap: Signal<Void> = signUpButton.rx.tap.asSignal()
+        signUpTap.emit(onNext: { [weak self] e in
+            self?.navigationController?.pushViewController(SignUpViewController(), animated: true)
+            }).disposed(by: disposeBag)
     }
     
     private func setupView() {
@@ -110,10 +137,6 @@ class SignInViewController: UIViewController {
             signUpHint.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             signUpHint.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)
         ])
-    }
-    
-    @objc private func signUpBtnPressed() {
-        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
     
 }

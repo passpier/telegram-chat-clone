@@ -28,7 +28,7 @@ class ProfileInputView: UIView {
         return iv
     }()
     
-    private lazy var inputField: UITextField = {
+    lazy var inputField: UITextField = {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.isSecureTextEntry = isSecureText

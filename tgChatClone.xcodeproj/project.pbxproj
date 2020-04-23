@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F12E74E2450359000EAD4B7 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12E74D2450359000EAD4B7 /* AuthService.swift */; };
+		1F12E7502450411B00EAD4B7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12E74F2450411B00EAD4B7 /* SignInViewModel.swift */; };
 		1F1335B5244BF38900D7E3B6 /* ProfileInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1335B4244BF38900D7E3B6 /* ProfileInputView.swift */; };
 		1F16B231244AFEFC009626D4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B230244AFEFC009626D4 /* SignUpViewController.swift */; };
 		1F16B234244B0162009626D4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B233244B0162009626D4 /* SignInViewController.swift */; };
@@ -23,12 +25,15 @@
 		1F1AE2BF2449678800558B68 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2BE2449678800558B68 /* ContactsViewController.swift */; };
 		1F1AE2C12449679700558B68 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2C02449679700558B68 /* ChatsViewController.swift */; };
 		1F1AE2C3244967A600558B68 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2C2244967A600558B68 /* SettingsViewController.swift */; };
+		1F2F9A3E2451CF3400428C58 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9A3D2451CF3400428C58 /* SignUpViewModel.swift */; };
 		3A0B62AD0E2405D0BE15A2D0 /* Pods_tgChatClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0473D4F0D94F2E032219A2A2 /* Pods_tgChatClone.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0473D4F0D94F2E032219A2A2 /* Pods_tgChatClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tgChatClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A436586A21AF2C216E7A1EC /* Pods-tgChatClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tgChatClone.debug.xcconfig"; path = "Target Support Files/Pods-tgChatClone/Pods-tgChatClone.debug.xcconfig"; sourceTree = "<group>"; };
+		1F12E74D2450359000EAD4B7 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		1F12E74F2450411B00EAD4B7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		1F1335B4244BF38900D7E3B6 /* ProfileInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInputView.swift; sourceTree = "<group>"; };
 		1F16B230244AFEFC009626D4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1F16B233244B0162009626D4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +52,7 @@
 		1F1AE2BE2449678800558B68 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		1F1AE2C02449679700558B68 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		1F1AE2C2244967A600558B68 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		1F2F9A3D2451CF3400428C58 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		A9568351A1E3AE6C2A4D283F /* Pods-tgChatClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tgChatClone.release.xcconfig"; path = "Target Support Files/Pods-tgChatClone/Pods-tgChatClone.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +68,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F12E74C245034CE00EAD4B7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1F12E74D2450359000EAD4B7 /* AuthService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		1F1335B3244BF36700D7E3B6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				1F16B230244AFEFC009626D4 /* SignUpViewController.swift */,
+				1F2F9A3D2451CF3400428C58 /* SignUpViewModel.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -82,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				1F16B233244B0162009626D4 /* SignInViewController.swift */,
+				1F12E74F2450411B00EAD4B7 /* SignInViewModel.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -123,6 +139,7 @@
 		1F1AE2A1244938E600558B68 /* tgChatClone */ = {
 			isa = PBXGroup;
 			children = (
+				1F12E74C245034CE00EAD4B7 /* Services */,
 				1F1335B3244BF36700D7E3B6 /* Views */,
 				1F16B23A244B6EBD009626D4 /* Settings */,
 				1F16B235244B0D99009626D4 /* Extensions */,
@@ -315,7 +332,10 @@
 				1F16B231244AFEFC009626D4 /* SignUpViewController.swift in Sources */,
 				1F16B23C244B6EE0009626D4 /* ThemeSettings.swift in Sources */,
 				1F1AE2C3244967A600558B68 /* SettingsViewController.swift in Sources */,
+				1F12E74E2450359000EAD4B7 /* AuthService.swift in Sources */,
+				1F2F9A3E2451CF3400428C58 /* SignUpViewModel.swift in Sources */,
 				1F1AE2A3244938E600558B68 /* AppDelegate.swift in Sources */,
+				1F12E7502450411B00EAD4B7 /* SignInViewModel.swift in Sources */,
 				1F16B234244B0162009626D4 /* SignInViewController.swift in Sources */,
 				1F1AE2A5244938E600558B68 /* SceneDelegate.swift in Sources */,
 				1F1AE2C12449679700558B68 /* ChatsViewController.swift in Sources */,

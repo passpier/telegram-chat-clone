@@ -8,9 +8,15 @@
 
 import UIKit
 import FirebaseAuth
+import RxSwift
+import RxCocoa
 
 class SignUpViewController: UIViewController {
-
+    
+    private var viewModel: SignUpViewModel?
+    
+    private let disposeBag = DisposeBag()
+    
     private lazy var titleLabel: UILabel = {
         let tl = UILabel()
         tl.translatesAutoresizingMaskIntoConstraints = false
@@ -20,28 +26,28 @@ class SignUpViewController: UIViewController {
         return tl
     }()
     
-    private lazy var firstNameContainer: UIView = {
+    private lazy var firstNameContainer: ProfileInputView = {
         let v = ProfileInputView(placeholder: "First Name", icon: #imageLiteral(resourceName: "ic_person_outline_white"))
         v.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return v
     }()
     
-    private lazy var lastNameContainer: UIView = {
-       let v = ProfileInputView(placeholder: "Last Name", icon: #imageLiteral(resourceName: "ic_person_outline_white"))
-       v.heightAnchor.constraint(equalToConstant: 50).isActive = true
-       return v
+    private lazy var lastNameContainer: ProfileInputView = {
+        let v = ProfileInputView(placeholder: "Last Name", icon: #imageLiteral(resourceName: "ic_person_outline_white"))
+        v.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return v
     }()
     
-    private lazy var emailContainer: UIView = {
-       let v = ProfileInputView(placeholder: "Email", icon: #imageLiteral(resourceName: "ic_mail_outline_white"))
-       v.heightAnchor.constraint(equalToConstant: 50).isActive = true
-       return v
+    private lazy var emailContainer: ProfileInputView = {
+        let v = ProfileInputView(placeholder: "Email", icon: #imageLiteral(resourceName: "ic_mail_outline_white"))
+        v.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return v
     }()
     
-    private lazy var passwordContainer: UIView = {
-       let v = ProfileInputView(placeholder: "Password", icon: #imageLiteral(resourceName: "ic_lock_outline_white"), isSecureText: true)
-       v.heightAnchor.constraint(equalToConstant: 50).isActive = true
-       return v
+    private lazy var passwordContainer: ProfileInputView = {
+        let v = ProfileInputView(placeholder: "Password", icon: #imageLiteral(resourceName: "ic_lock_outline_white"), isSecureText: true)
+        v.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return v
     }()
     
     private lazy var signUpButton: UIButton = {
@@ -70,15 +76,34 @@ class SignUpViewController: UIViewController {
     private lazy var backButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("SignIn", for: .normal)
+        btn.setTitle("Sign In", for: .normal)
         btn.setTitleColor(UIColor(red: 0x17, green: 0x98, blue: 0xc9), for: .normal)
-        btn.addTarget(self, action: #selector(backBtnPressed), for: .touchUpInside)
         return btn
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
         setupView()
+    }
+    
+    private func bindViewModel() {
+        let authService: AuthProtocol = AuthService()
+        viewModel = SignUpViewModel(email: emailContainer.inputField.rx.text.orEmpty.asDriver(), password: passwordContainer.inputField.rx.text.orEmpty.asDriver(), firstName: firstNameContainer.inputField.rx.text.orEmpty.asDriver(), lastName: lastNameContainer.inputField.rx.text.orEmpty.asDriver(), signupTap: signUpButton.rx.tap.asSignal(), authService: authService)
+        viewModel?.signedUp
+            .drive(onNext: { [weak self] signedUp in
+                print("User signed up \(signedUp)")
+                if !signedUp {
+                    let controller = UIAlertController(title: "Signup Failed", message: "Your email or password is incorrect.", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    controller.addAction(okAction)
+                    self?.present(controller, animated: true, completion: nil)
+                }
+            }).disposed(by: disposeBag)
+        let backButtonTap: Signal<Void> = backButton.rx.tap.asSignal()
+        backButtonTap.emit(onNext: { [weak self] e in
+            self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
     }
     
     private func setupView() {
@@ -105,13 +130,5 @@ class SignUpViewController: UIViewController {
             signInHint.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             signInHint.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)
         ])
-    }
-    
-    @objc private func backBtnPressed() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    func createUser() {
-//        Auth.auth().createUser(withEmail: <#T##String#>, password: <#T##String#>, completion: <#T##AuthDataResultCallback?##AuthDataResultCallback?##(AuthDataResult?, Error?) -> Void#>)
     }
 }
