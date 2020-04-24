@@ -98,6 +98,10 @@ class SignUpViewController: UIViewController {
                     let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     controller.addAction(okAction)
                     self?.present(controller, animated: true, completion: nil)
+                } else {
+                    let root = RootTabBarController()
+                    root.modalPresentationStyle = .fullScreen
+                    self?.present(root, animated: false, completion: nil)
                 }
             }).disposed(by: disposeBag)
         let backButtonTap: Signal<Void> = backButton.rx.tap.asSignal()
