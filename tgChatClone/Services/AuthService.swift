@@ -16,6 +16,7 @@ import FirebaseFirestoreSwift
 protocol AuthProtocol {
     func signin(email: String, password: String) -> Observable<Bool>
     func signup(email: String, password: String, firstName: String, lastName: String) -> Observable<Bool>
+    func signout()
 }
 
 struct UserProfile: Codable  {
@@ -74,6 +75,14 @@ class AuthService: AuthProtocol {
                 }
             }
             return Disposables.create()
+        }
+    }
+    
+    func signout() {
+        do {
+            try Auth.auth().signOut()
+        } catch let err {
+            print("Logout error: \(err.localizedDescription)")
         }
     }
     
