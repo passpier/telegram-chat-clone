@@ -9,37 +9,26 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import RxSwift
+import RxCocoa
 
 class ContactsViewController: UIViewController {
 
+    private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        logout()
-//
-//        let db = Firestore.firestore()
-//        var ref: DocumentReference? = nil
-//        ref = db.collection("users").addDocument(data: [
-//            "first": "Ada",
-//            "last": "Lovelace",
-//            "born": 1815
-//        ]) { err in
-//            if let err = err {
-//                print("Error adding document: \(err)")
-//            } else {
-//                print("Document added with ID: \(ref!.documentID)")
-//            }
-//        }
-        
+        setupNavbar()
     }
     
-    private func logout() {
-        do {
-            try Auth.auth().signOut()
-        } catch let err {
-            print("Logout error: \(err.localizedDescription)")
-        }
-        
+    private func setupNavbar() {
+        let addContactBtn = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = addContactBtn
+        let addContactTap: Signal<Void> = addContactBtn.rx.tap.asSignal()
+        addContactTap.emit(onNext: { [weak self] e in
+            self?.present(UINavigationController(rootViewController: AddContactViewController()), animated: true, completion: nil)
+        }).disposed(by: disposeBag)
     }
 
 }

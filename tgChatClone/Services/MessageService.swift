@@ -7,12 +7,30 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import FirebaseAuth
 
 protocol MessageProtocol {
     
 }
 
 class MessageService {
+    
+    let db = Firestore.firestore()
+    
+    func addFriend(email: String, name: String = "") {
+        db.collection("users").whereField("email", isEqualTo: email).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    
+                }
+            }
+        }
+    }
     
     func observeFriendList() {
 //        guard let chatPartnerId = message.chatPartnerId() else {
@@ -75,6 +93,22 @@ class MessageService {
     
     func sendVideoMessage() {
         
+    }
+    
+    private func checkFriendIsExist(email: String, name: String = "") {
+    }
+    
+    private func addFriendToFirestore(email: String, name: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let channelID = UUID().uuidString
+        let friend = Friend(uid: uid, name: name, channelID: channelID)
+        do {
+            _ = try db.collection("contacts").addDocument(from: friend)
+            completionHandler(.success(true))
+        } catch let error {
+            print("Error writing contacts to Firestore: \(error)")
+            completionHandler(.failure(error))
+        }
     }
     
     

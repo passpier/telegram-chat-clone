@@ -75,7 +75,7 @@ class SignInViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Not a member?"
-        label.textColor = UIColor(red: 0xB0, green: 0xB0, blue: 0xB0)
+        label.textColor = .lightGray
         return label
     }()
     

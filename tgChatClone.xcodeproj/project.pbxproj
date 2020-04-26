@@ -26,6 +26,10 @@
 		1F1AE2C12449679700558B68 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2C02449679700558B68 /* ChatsViewController.swift */; };
 		1F1AE2C3244967A600558B68 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AE2C2244967A600558B68 /* SettingsViewController.swift */; };
 		1F2F9A3E2451CF3400428C58 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9A3D2451CF3400428C58 /* SignUpViewModel.swift */; };
+		1F31EBC5245581AC009D4449 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F31EBC4245581AC009D4449 /* Friend.swift */; };
+		1F31EBC72455C33F009D4449 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F31EBC62455C33F009D4449 /* AddContactViewController.swift */; };
+		1F31EBC92455D3B6009D4449 /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F31EBC82455D3B6009D4449 /* AddContactViewModel.swift */; };
+		1F31EBCC2455DD50009D4449 /* ProfileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F31EBCB2455DD50009D4449 /* ProfileHelper.swift */; };
 		1F7941F62452FADD00629A0F /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7941F52452FADD00629A0F /* MessageService.swift */; };
 		1F7941FA2452FC8500629A0F /* ContactToolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7941F92452FC8500629A0F /* ContactToolCell.swift */; };
 		1F7941FC2452FCB500629A0F /* ContactUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7941FB2452FCB500629A0F /* ContactUserCell.swift */; };
@@ -56,6 +60,10 @@
 		1F1AE2C02449679700558B68 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		1F1AE2C2244967A600558B68 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1F2F9A3D2451CF3400428C58 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		1F31EBC4245581AC009D4449 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		1F31EBC62455C33F009D4449 /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		1F31EBC82455D3B6009D4449 /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
+		1F31EBCB2455DD50009D4449 /* ProfileHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHelper.swift; sourceTree = "<group>"; };
 		1F7941F52452FADD00629A0F /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		1F7941F92452FC8500629A0F /* ContactToolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactToolCell.swift; sourceTree = "<group>"; };
 		1F7941FB2452FCB500629A0F /* ContactUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUserCell.swift; sourceTree = "<group>"; };
@@ -79,6 +87,7 @@
 			children = (
 				1F12E74D2450359000EAD4B7 /* AuthService.swift */,
 				1F7941F52452FADD00629A0F /* MessageService.swift */,
+				1F31EBC4245581AC009D4449 /* Friend.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -146,6 +155,7 @@
 		1F1AE2A1244938E600558B68 /* tgChatClone */ = {
 			isa = PBXGroup;
 			children = (
+				1F31EBCA2455DD18009D4449 /* Helpers */,
 				1F12E74C245034CE00EAD4B7 /* Services */,
 				1F1335B3244BF36700D7E3B6 /* Views */,
 				1F16B23A244B6EBD009626D4 /* Settings */,
@@ -182,6 +192,8 @@
 				1F1AE2BE2449678800558B68 /* ContactsViewController.swift */,
 				1F7941F92452FC8500629A0F /* ContactToolCell.swift */,
 				1F7941FB2452FCB500629A0F /* ContactUserCell.swift */,
+				1F31EBC62455C33F009D4449 /* AddContactViewController.swift */,
+				1F31EBC82455D3B6009D4449 /* AddContactViewModel.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -200,6 +212,14 @@
 				1F1AE2C2244967A600558B68 /* SettingsViewController.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		1F31EBCA2455DD18009D4449 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1F31EBCB2455DD50009D4449 /* ProfileHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		51F8AA2BC141BF8BE6BDBB5B /* Frameworks */ = {
@@ -340,6 +360,7 @@
 				1F1AE2BA2449650E00558B68 /* RootTabBarController.swift in Sources */,
 				1F16B231244AFEFC009626D4 /* SignUpViewController.swift in Sources */,
 				1F16B23C244B6EE0009626D4 /* ThemeSettings.swift in Sources */,
+				1F31EBC72455C33F009D4449 /* AddContactViewController.swift in Sources */,
 				1F7941F62452FADD00629A0F /* MessageService.swift in Sources */,
 				1F1AE2C3244967A600558B68 /* SettingsViewController.swift in Sources */,
 				1F12E74E2450359000EAD4B7 /* AuthService.swift in Sources */,
@@ -347,7 +368,10 @@
 				1F7941FA2452FC8500629A0F /* ContactToolCell.swift in Sources */,
 				1F1AE2A3244938E600558B68 /* AppDelegate.swift in Sources */,
 				1F12E7502450411B00EAD4B7 /* SignInViewModel.swift in Sources */,
+				1F31EBCC2455DD50009D4449 /* ProfileHelper.swift in Sources */,
 				1F16B234244B0162009626D4 /* SignInViewController.swift in Sources */,
+				1F31EBC92455D3B6009D4449 /* AddContactViewModel.swift in Sources */,
+				1F31EBC5245581AC009D4449 /* Friend.swift in Sources */,
 				1F1AE2A5244938E600558B68 /* SceneDelegate.swift in Sources */,
 				1F1AE2C12449679700558B68 /* ChatsViewController.swift in Sources */,
 				1F1AE2BF2449678800558B68 /* ContactsViewController.swift in Sources */,

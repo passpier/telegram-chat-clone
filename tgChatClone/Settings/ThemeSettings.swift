@@ -10,15 +10,6 @@ import Foundation
 import UIKit
 
 struct ThemeSettings {
-    
-    var appColor: UIColor
-    
-    init() {
-        self.appColor = UIColor(red: 0x17, green: 0x98, blue: 0xc9)
-    }
-    
-    static var defaultSettings: ThemeSettings {
-        return ThemeSettings()
-    }
+    static let appColor = UIColor(red: 0x17, green: 0x98, blue: 0xc9)
 }
 

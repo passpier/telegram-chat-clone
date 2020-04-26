@@ -20,14 +20,17 @@ protocol AuthProtocol {
 }
 
 struct UserProfile: Codable  {
+    
     let firstName: String?
     let lastName: String?
+    let email: String?
     let phoneNumbers: String?
     let profileImageUrl: String?
     
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
         case lastName = "last_name"
+        case email
         case phoneNumbers = "phone_numbers"
         case profileImageUrl = "profile_image_url"
     }
@@ -59,8 +62,8 @@ class AuthService: AuthProtocol {
                     print("Error: ", error.localizedDescription)
                     observer.onError(error)
                 } else if let uid = authResult?.user.uid {
-                    let profile = UserProfile(firstName: firstName, lastName: lastName, phoneNumbers: "", profileImageUrl: "")
-                    self?.addNewUser(withUid: uid, profile: profile) { result in
+                    let profile = UserProfile(firstName: firstName, lastName: lastName, email: "", phoneNumbers: "", profileImageUrl: "")
+                    self?.createNewUser(withUid: uid, profile: profile) { result in
                         switch result {
                         case .success(let success):
                             print("Add new user \(success)!")
@@ -73,6 +76,7 @@ class AuthService: AuthProtocol {
                 } else {
                     observer.onNext(false)
                 }
+                observer.onCompleted()
             }
             return Disposables.create()
         }
@@ -86,13 +90,13 @@ class AuthService: AuthProtocol {
         }
     }
     
-    private func addNewUser(withUid uid: String, profile: UserProfile, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    private func createNewUser(withUid uid: String, profile: UserProfile, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         let db = Firestore.firestore()
         do {
             try db.collection("users").document(uid).setData(from: profile)
             completionHandler(.success(true))
         } catch let error {
-            print("Error writing city to Firestore: \(error)")
+            print("Error writing users to Firestore: \(error)")
             completionHandler(.failure(error))
         }
     }
