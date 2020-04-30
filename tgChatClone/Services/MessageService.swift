@@ -10,44 +10,75 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
+import RxSwift
+import RxCocoa
 
 protocol MessageProtocol {
-    
+    func addFriend(email: String, name: String) -> Observable<Bool>
+    func observeFriendList(withUid uid: String) -> Observable<[ContactPresentItem]>
 }
 
-class MessageService {
+class MessageService: MessageProtocol {
     
     let db = Firestore.firestore()
     
-    func addFriend(email: String, name: String = "") {
-        db.collection("users").whereField("email", isEqualTo: email).getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
+    func addFriend(email: String, name: String = "") -> Observable<Bool> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection("users").whereField("email", isEqualTo: email.lowercased()).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    observer.onError(err)
+                } else {
+                    guard let document = querySnapshot!.documents.first else {
+                        observer.onNext(false)
+                        observer.onCompleted()
+                        return
+                    }
                     print("\(document.documentID) => \(document.data())")
-                    
+                    guard let username = self?.getUserName(document) else {
+                        observer.onNext(false)
+                        observer.onCompleted()
+                        return
+                    }
+                    self?.addFriendToFirestore(name: username) { result in
+                        switch result {
+                        case .success(let success):
+                            print("Add friend \(success)!")
+                            observer.onNext(true)
+                            observer.onCompleted()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            observer.onError(error)
+                        }
+                    }
                 }
             }
+            return Disposables.create()
         }
     }
     
-    func observeFriendList() {
-//        guard let chatPartnerId = message.chatPartnerId() else {
-//            return
-//        }
-//
-//        let ref = Database.database().reference().child("users").child(chatPartnerId)
-//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            guard let dictionary = snapshot.value as? [String: AnyObject] else {
-//                return
-//            }
-//
-//            let user = User(dictionary: dictionary)
-//            user.id = chatPartnerId
-//            self.showChatControllerForUser(user)
-//
-//            }, withCancel: nil)
+    func observeFriendList(withUid uid: String) -> Observable<[ContactPresentItem]>  {
+        return Observable.create { [weak self] observer in
+            let notificationToken = self?.db.collection("contacts").whereField("uid", isEqualTo: uid).addSnapshotListener { querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching documents: \(error!)")
+                    observer.onError(error!)
+                    return
+                }
+                let contacts = documents.map { contact -> ContactPresentItem in
+                    let name = contact["name"] as! String
+                    return ContactPresentItem(name: name, lastLogin: Date())
+                }
+                print("Friend list: \(contacts)")
+                observer.onNext(contacts)
+            }
+            
+            return Disposables.create {
+                if let notificationToken = notificationToken {
+                    notificationToken.remove()
+                }
+            }
+        }
     }
     
     func observeMessage() {
@@ -95,10 +126,14 @@ class MessageService {
         
     }
     
-    private func checkFriendIsExist(email: String, name: String = "") {
+    fileprivate func getUserName(_ document: QueryDocumentSnapshot) -> String {
+        let dic = document.data()
+        guard let firstName = dic["first_name"] else { return "" }
+        guard let lastName = dic["last_name"] else { return firstName as! String }
+        return "\(firstName) \(lastName)"
     }
     
-    private func addFriendToFirestore(email: String, name: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    private func addFriendToFirestore(name: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let channelID = UUID().uuidString
         let friend = Friend(uid: uid, name: name, channelID: channelID)

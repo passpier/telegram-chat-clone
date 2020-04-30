@@ -36,14 +36,7 @@ class AddContactViewController: UIViewController {
         tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return tf
     }()
-    
-    lazy var underline: UIView = {
-        let v = UIView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = .lightGray
-        v.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        return v
-    }()
+
     
     lazy var lastNameField: UITextField = {
         let tf = UITextField()
@@ -51,6 +44,22 @@ class AddContactViewController: UIViewController {
         tf.attributedPlaceholder = NSAttributedString(string: "Last Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return tf
+    }()
+    
+    lazy var emailField: UITextField = {
+       let tf = UITextField()
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return tf
+    }()
+    
+    lazy var cancelBtn: UIBarButtonItem = {
+        return UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+    }()
+    
+    lazy var createBtn: UIBarButtonItem = {
+        return UIBarButtonItem(title: "Create", style: .plain, target: nil, action: nil)
     }()
     
     override func viewDidLoad() {
@@ -63,12 +72,16 @@ class AddContactViewController: UIViewController {
     
     private func bindViewModel() {
         let profileHelper = ProfileHelper()
-        viewModel = AddContactViewModel(firstName: firstNameField.rx.text.orEmpty.asDriver(), lastName: lastNameField.rx.text.orEmpty.asDriver(), profileHelper: profileHelper)
+        let messageService = MessageService()
+        viewModel = AddContactViewModel(firstName: firstNameField.rx.text.orEmpty.asDriver(), lastName: lastNameField.rx.text.orEmpty.asDriver(), email: emailField.rx.text.orEmpty.asDriver(), createTap: createBtn.rx.tap.asSignal(),profileHelper: profileHelper, messageService: messageService)
         viewModel?.friendPhoto.drive(photo.rx.image).disposed(by: disposeBag)
+        viewModel?.isContactCreated.drive(onNext: { success in
+            print("Create new contact \(success)")
+            }).disposed(by: disposeBag)
     }
     
     private func setupUI() {
-        let nameStack = UIStackView(arrangedSubviews: [firstNameField, underline, lastNameField])
+        let nameStack = UIStackView(arrangedSubviews: [firstNameField, setupUnderline(), lastNameField])
         nameStack.axis = .vertical
         nameStack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -78,18 +91,25 @@ class AddContactViewController: UIViewController {
         mainStack.spacing = 20
         mainStack.alignment = .center
         
+        let emailStack = UIStackView(arrangedSubviews: [emailField, setupUnderline()])
+        emailStack.axis = .vertical
+        emailStack.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(mainStack)
+        view.addSubview(emailStack)
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             mainStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             mainStack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            
+            emailStack.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 20),
+            emailStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            emailStack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20)
         ])
         
     }
     
     private func setupNavbar() {
-        let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
-        let createBtn = UIBarButtonItem(title: "Create", style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem = cancelBtn
         navigationItem.rightBarButtonItem = createBtn
         navigationItem.title = "New Contact"
@@ -98,13 +118,20 @@ class AddContactViewController: UIViewController {
             self?.dismiss(animated: true, completion: nil)
         }).disposed(by: disposeBag)
         
-        let createTap: Signal<Void> = createBtn.rx.tap.asSignal()
-        createTap.emit(onNext: { e in
-            print("Create Contact")
-        }).disposed(by: disposeBag)
+//        let createTap: Signal<Void> = createBtn.rx.tap.asSignal()
+//        createTap.emit(onNext: { e in
+//            print("Create Contact")
+//        }).disposed(by: disposeBag)
     }
     
-
+    private func setupUnderline() -> UIView {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .lightGray
+        v.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        return v
+    }
+    
     /*
     // MARK: - Navigation
 

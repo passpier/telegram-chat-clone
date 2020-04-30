@@ -10,6 +10,10 @@
 		1F12E74E2450359000EAD4B7 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12E74D2450359000EAD4B7 /* AuthService.swift */; };
 		1F12E7502450411B00EAD4B7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12E74F2450411B00EAD4B7 /* SignInViewModel.swift */; };
 		1F1335B5244BF38900D7E3B6 /* ProfileInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1335B4244BF38900D7E3B6 /* ProfileInputView.swift */; };
+		1F15C2D4245A845A00EC1077 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15C2D3245A845A00EC1077 /* SettingsViewModel.swift */; };
+		1F15C2D6245A961800EC1077 /* UITableViewCell+Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15C2D5245A961800EC1077 /* UITableViewCell+Identifier.swift */; };
+		1F15C2DA245AB39D00EC1077 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15C2D9245AB39D00EC1077 /* ContactsViewModel.swift */; };
+		1F15C2DD245AB5BE00EC1077 /* ContactPresentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15C2DC245AB5BE00EC1077 /* ContactPresentItem.swift */; };
 		1F16B231244AFEFC009626D4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B230244AFEFC009626D4 /* SignUpViewController.swift */; };
 		1F16B234244B0162009626D4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B233244B0162009626D4 /* SignInViewController.swift */; };
 		1F16B239244B0F7E009626D4 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F16B238244B0F7E009626D4 /* UIColor+Hex.swift */; };
@@ -42,6 +46,10 @@
 		1F12E74D2450359000EAD4B7 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		1F12E74F2450411B00EAD4B7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		1F1335B4244BF38900D7E3B6 /* ProfileInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInputView.swift; sourceTree = "<group>"; };
+		1F15C2D3245A845A00EC1077 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		1F15C2D5245A961800EC1077 /* UITableViewCell+Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Identifier.swift"; sourceTree = "<group>"; };
+		1F15C2D9245AB39D00EC1077 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		1F15C2DC245AB5BE00EC1077 /* ContactPresentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPresentItem.swift; sourceTree = "<group>"; };
 		1F16B230244AFEFC009626D4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1F16B233244B0162009626D4 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		1F16B238244B0F7E009626D4 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -100,6 +108,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		1F15C2DB245AB3ED00EC1077 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1F15C2DC245AB5BE00EC1077 /* ContactPresentItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		1F16B22F244AF969009626D4 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				1F16B238244B0F7E009626D4 /* UIColor+Hex.swift */,
+				1F15C2D5245A961800EC1077 /* UITableViewCell+Identifier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -155,6 +172,7 @@
 		1F1AE2A1244938E600558B68 /* tgChatClone */ = {
 			isa = PBXGroup;
 			children = (
+				1F15C2DB245AB3ED00EC1077 /* Models */,
 				1F31EBCA2455DD18009D4449 /* Helpers */,
 				1F12E74C245034CE00EAD4B7 /* Services */,
 				1F1335B3244BF36700D7E3B6 /* Views */,
@@ -194,6 +212,7 @@
 				1F7941FB2452FCB500629A0F /* ContactUserCell.swift */,
 				1F31EBC62455C33F009D4449 /* AddContactViewController.swift */,
 				1F31EBC82455D3B6009D4449 /* AddContactViewModel.swift */,
+				1F15C2D9245AB39D00EC1077 /* ContactsViewModel.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -210,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				1F1AE2C2244967A600558B68 /* SettingsViewController.swift */,
+				1F15C2D3245A845A00EC1077 /* SettingsViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -356,6 +376,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F1AE2A7244938E600558B68 /* ViewController.swift in Sources */,
+				1F15C2D4245A845A00EC1077 /* SettingsViewModel.swift in Sources */,
 				1F1335B5244BF38900D7E3B6 /* ProfileInputView.swift in Sources */,
 				1F1AE2BA2449650E00558B68 /* RootTabBarController.swift in Sources */,
 				1F16B231244AFEFC009626D4 /* SignUpViewController.swift in Sources */,
@@ -370,10 +391,13 @@
 				1F12E7502450411B00EAD4B7 /* SignInViewModel.swift in Sources */,
 				1F31EBCC2455DD50009D4449 /* ProfileHelper.swift in Sources */,
 				1F16B234244B0162009626D4 /* SignInViewController.swift in Sources */,
+				1F15C2DA245AB39D00EC1077 /* ContactsViewModel.swift in Sources */,
+				1F15C2DD245AB5BE00EC1077 /* ContactPresentItem.swift in Sources */,
 				1F31EBC92455D3B6009D4449 /* AddContactViewModel.swift in Sources */,
 				1F31EBC5245581AC009D4449 /* Friend.swift in Sources */,
 				1F1AE2A5244938E600558B68 /* SceneDelegate.swift in Sources */,
 				1F1AE2C12449679700558B68 /* ChatsViewController.swift in Sources */,
+				1F15C2D6245A961800EC1077 /* UITableViewCell+Identifier.swift in Sources */,
 				1F1AE2BF2449678800558B68 /* ContactsViewController.swift in Sources */,
 				1F16B239244B0F7E009626D4 /* UIColor+Hex.swift in Sources */,
 				1F7941FC2452FCB500629A0F /* ContactUserCell.swift in Sources */,

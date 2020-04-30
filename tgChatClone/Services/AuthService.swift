@@ -16,7 +16,7 @@ import FirebaseFirestoreSwift
 protocol AuthProtocol {
     func signin(email: String, password: String) -> Observable<Bool>
     func signup(email: String, password: String, firstName: String, lastName: String) -> Observable<Bool>
-    func signout()
+    func signout() -> Observable<Bool>
 }
 
 struct UserProfile: Codable  {
@@ -47,8 +47,8 @@ class AuthService: AuthProtocol {
                     observer.onError(error)
                 } else {
                     observer.onNext(true)
+                    observer.onCompleted()
                 }
-                observer.onCompleted()
             }
             return Disposables.create()
         }
@@ -62,12 +62,13 @@ class AuthService: AuthProtocol {
                     print("Error: ", error.localizedDescription)
                     observer.onError(error)
                 } else if let uid = authResult?.user.uid {
-                    let profile = UserProfile(firstName: firstName, lastName: lastName, email: "", phoneNumbers: "", profileImageUrl: "")
+                    let profile = UserProfile(firstName: firstName, lastName: lastName, email: email.lowercased(), phoneNumbers: "", profileImageUrl: "")
                     self?.createNewUser(withUid: uid, profile: profile) { result in
                         switch result {
                         case .success(let success):
                             print("Add new user \(success)!")
                             observer.onNext(true)
+                            observer.onCompleted()
                         case .failure(let error):
                             print(error.localizedDescription)
                             observer.onError(error)
@@ -75,22 +76,30 @@ class AuthService: AuthProtocol {
                     }
                 } else {
                     observer.onNext(false)
+                    observer.onCompleted()
                 }
-                observer.onCompleted()
             }
             return Disposables.create()
         }
     }
     
-    func signout() {
-        do {
-            try Auth.auth().signOut()
-        } catch let err {
-            print("Logout error: \(err.localizedDescription)")
+    func signout() -> Observable<Bool> {
+        return Observable.create { observer in
+            do {
+                try Auth.auth().signOut()
+                observer.onNext(true)
+                observer.onCompleted()
+            } catch let err {
+                print("Logout error: \(err.localizedDescription)")
+                observer.onError(err)
+            }
+            return Disposables.create()
         }
     }
     
     private func createNewUser(withUid uid: String, profile: UserProfile, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        print("uid: \(uid)")
+        print("profile: \(profile)")
         let db = Firestore.firestore()
         do {
             try db.collection("users").document(uid).setData(from: profile)
