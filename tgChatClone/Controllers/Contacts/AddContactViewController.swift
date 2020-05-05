@@ -99,12 +99,12 @@ class AddContactViewController: UIViewController {
         view.addSubview(emailStack)
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            mainStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            mainStack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             emailStack.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 20),
-            emailStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            emailStack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20)
+            emailStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emailStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
     }
@@ -117,11 +117,6 @@ class AddContactViewController: UIViewController {
         cancelTap.emit(onNext: { [weak self] e in
             self?.dismiss(animated: true, completion: nil)
         }).disposed(by: disposeBag)
-        
-//        let createTap: Signal<Void> = createBtn.rx.tap.asSignal()
-//        createTap.emit(onNext: { e in
-//            print("Create Contact")
-//        }).disposed(by: disposeBag)
     }
     
     private func setupUnderline() -> UIView {
@@ -131,15 +126,5 @@ class AddContactViewController: UIViewController {
         v.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return v
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

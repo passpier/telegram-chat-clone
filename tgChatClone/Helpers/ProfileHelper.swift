@@ -11,30 +11,45 @@ import RxSwift
 import RxCocoa
 
 protocol ProfileHelperProtocol {
-    func createPhotoWith(name: String?) -> Observable<UIImage?>
+    func onPhotoChange(withName: String) -> Observable<UIImage?>
+    func createPhoto(withName name: String, color: UIColor?) -> UIImage?
 }
 
-struct ProfileHelper: ProfileHelperProtocol {
+class ProfileHelper: ProfileHelperProtocol {
     
-    func createPhotoWith(name: String?) -> Observable<UIImage?> {
-        return Observable.create { observer in
-            let frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-            let nameLabel = UILabel(frame: frame)
-            nameLabel.textAlignment = .center
-            nameLabel.backgroundColor = .lightGray
-            nameLabel.textColor = .white
-            nameLabel.font = UIFont.boldSystemFont(ofSize: 40)
-            nameLabel.text = name
-            UIGraphicsBeginImageContext(frame.size)
-            if let currentContext = UIGraphicsGetCurrentContext() {
-                nameLabel.layer.render(in: currentContext)
-                let nameImage = UIGraphicsGetImageFromCurrentImageContext()
+    func onPhotoChange(withName name: String) -> Observable<UIImage?> {
+        return Observable.create { [weak self] observer in
+            if let nameImage = self?.createPhoto(withName: name, color: .lightGray) {
                 observer.onNext(nameImage)
                 observer.onCompleted()
+            } else {
+                observer.onNext(nil)
+                observer.onCompleted()
             }
-            observer.onNext(nil)
-            observer.onCompleted()
             return Disposables.create()
         }
+    }
+    
+    func createPhoto(withName name: String, color: UIColor?) -> UIImage? {
+        let frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        let nameLabel = UILabel(frame: frame)
+        nameLabel.textAlignment = .center
+        nameLabel.backgroundColor = color ?? generateRandomColor()
+        nameLabel.textColor = .white
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 40)
+        nameLabel.text = name
+        UIGraphicsBeginImageContext(frame.size)
+        if let currentContext = UIGraphicsGetCurrentContext() {
+            nameLabel.layer.render(in: currentContext)
+            let nameImage = UIGraphicsGetImageFromCurrentImageContext()
+            return nameImage
+        }
+        return nil
+    }
+    
+    private func generateRandomColor() -> UIColor {
+        let colors: [UIColor] = [.systemPink, .systemTeal, .systemPurple, .systemGreen]
+        let index: Int = Int.random(in: 0...2)
+        return colors[index]
     }
 }

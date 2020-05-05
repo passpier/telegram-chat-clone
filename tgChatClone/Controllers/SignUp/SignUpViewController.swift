@@ -128,8 +128,8 @@ class SignUpViewController: UIViewController {
         view.addSubview(signInHint)
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
-            stack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
-            stack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             
             signInHint.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             signInHint.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)

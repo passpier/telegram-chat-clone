@@ -37,18 +37,26 @@ class ContactsViewController: UIViewController {
     private func bindViewModel() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let messageService = MessageService()
-        viewModel = ContactsViewModel(uid: uid, messageService: messageService)
+        let profileHelper = ProfileHelper()
+        viewModel = ContactsViewModel(uid: uid, messageService: messageService, profileHelper: profileHelper)
         viewModel?.contactPresentItems.drive(tableView.rx.items(cellIdentifier: ContactUserCell.cellIdentifier(), cellType: ContactUserCell.self)) { (tv, contactItem, cell) in
+            cell.userPhoto.image = contactItem.photo
             cell.userLabel.text = contactItem.name
             cell.lastLoginLabel.text = "last seen 2 minutes ago"
         }.disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        tableView.rx.modelSelected(ContactPresentItem.self).subscribe(onNext: { [weak self] item in
+            let messageVC = MessageViewController(chatFriend: item)
+            messageVC.hidesBottomBarWhenPushed = true
+            self?.navigationController?.pushViewController(messageVC, animated: true)
+        }).disposed(by: disposeBag)
     }
     
     
     private func setupNavbar() {
         let addContactBtn = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = addContactBtn
         navigationItem.title = "Contacts"
         let addContactTap: Signal<Void> = addContactBtn.rx.tap.asSignal()
@@ -62,8 +70,8 @@ class ContactsViewController: UIViewController {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }

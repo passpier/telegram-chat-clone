@@ -6,9 +6,18 @@
 //  Copyright © 2020 PSC. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct ContactPresentItem {
+struct ContactItem {
+    var firstName: String
+    var lastName: String
+    var lastLogin: Date
+}
+
+struct ContactPresentItem: ChatFriendProtocol {
+    var photo: UIImage?
     var name: String
     var lastLogin: Date
 }
+
+

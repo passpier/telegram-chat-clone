@@ -64,12 +64,12 @@ class ProfileInputView: UIView {
             iconImageView.heightAnchor.constraint(equalToConstant: 24),
             iconImageView.widthAnchor.constraint(equalToConstant: 24),
             
-            iconContainer.leftAnchor.constraint(equalTo: leftAnchor),
+            iconContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconContainer.heightAnchor.constraint(equalTo: heightAnchor),
             iconContainer.widthAnchor.constraint(equalTo: heightAnchor),
             
-            inputField.leftAnchor.constraint(equalTo: iconContainer.rightAnchor, constant: 15),
-            inputField.rightAnchor.constraint(equalTo: rightAnchor),
+            inputField.leadingAnchor.constraint(equalTo: iconContainer.trailingAnchor, constant: 15),
+            inputField.trailingAnchor.constraint(equalTo: trailingAnchor),
             inputField.heightAnchor.constraint(equalTo: heightAnchor),
         ])
     }

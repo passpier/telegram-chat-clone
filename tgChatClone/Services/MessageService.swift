@@ -14,15 +14,20 @@ import RxSwift
 import RxCocoa
 
 protocol MessageProtocol {
-    func addFriend(email: String, name: String) -> Observable<Bool>
-    func observeFriendList(withUid uid: String) -> Observable<[ContactPresentItem]>
+    func addFriend(email: String, firstName: String, lastName: String) -> Observable<Bool>
+    func observeFriendList(withUid uid: String) -> Observable<[ContactItem]>
+}
+
+struct UserName {
+    var firstName: String
+    var lastName: String
 }
 
 class MessageService: MessageProtocol {
     
     let db = Firestore.firestore()
     
-    func addFriend(email: String, name: String = "") -> Observable<Bool> {
+    func addFriend(email: String, firstName: String = "", lastName: String = "") -> Observable<Bool> {
         return Observable.create { [weak self] observer in
             self?.db.collection("users").whereField("email", isEqualTo: email.lowercased()).getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -35,12 +40,12 @@ class MessageService: MessageProtocol {
                         return
                     }
                     print("\(document.documentID) => \(document.data())")
-                    guard let username = self?.getUserName(document) else {
+                    guard let user = self?.getUserName(document) else {
                         observer.onNext(false)
                         observer.onCompleted()
                         return
                     }
-                    self?.addFriendToFirestore(name: username) { result in
+                    self?.addFriendToFirestore(firstName: user.firstName, lastName: user.lastName) { result in
                         switch result {
                         case .success(let success):
                             print("Add friend \(success)!")
@@ -57,26 +62,25 @@ class MessageService: MessageProtocol {
         }
     }
     
-    func observeFriendList(withUid uid: String) -> Observable<[ContactPresentItem]>  {
+    func observeFriendList(withUid uid: String) -> Observable<[ContactItem]>  {
         return Observable.create { [weak self] observer in
-            let notificationToken = self?.db.collection("contacts").whereField("uid", isEqualTo: uid).addSnapshotListener { querySnapshot, error in
+            guard let self = self else { return Disposables.create() }
+            let notificationToken = self.db.collection("contacts").whereField("uid", isEqualTo: uid).addSnapshotListener { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
                     print("Error fetching documents: \(error!)")
                     observer.onError(error!)
                     return
                 }
-                let contacts = documents.map { contact -> ContactPresentItem in
-                    let name = contact["name"] as! String
-                    return ContactPresentItem(name: name, lastLogin: Date())
+                let contacts = documents.map {contact -> ContactItem in
+                    let user = self.getUserName(contact)
+                    return ContactItem(firstName: user.firstName, lastName: user.lastName, lastLogin: Date())
                 }
                 print("Friend list: \(contacts)")
                 observer.onNext(contacts)
             }
             
             return Disposables.create {
-                if let notificationToken = notificationToken {
-                    notificationToken.remove()
-                }
+                notificationToken.remove()
             }
         }
     }
@@ -126,17 +130,18 @@ class MessageService: MessageProtocol {
         
     }
     
-    fileprivate func getUserName(_ document: QueryDocumentSnapshot) -> String {
+    private func getUserName(_ document: QueryDocumentSnapshot) -> UserName {
+        print("get user name")
         let dic = document.data()
-        guard let firstName = dic["first_name"] else { return "" }
-        guard let lastName = dic["last_name"] else { return firstName as! String }
-        return "\(firstName) \(lastName)"
+        guard let firstName = dic["first_name"] as? String else { return UserName(firstName: "", lastName: "") }
+        guard let lastName = dic["last_name"] as? String else { return UserName(firstName: firstName, lastName: "") }
+        return UserName(firstName: firstName, lastName: lastName)
     }
     
-    private func addFriendToFirestore(name: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    private func addFriendToFirestore(firstName: String, lastName: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let channelID = UUID().uuidString
-        let friend = Friend(uid: uid, name: name, channelID: channelID)
+        let friend = Friend(uid: uid, firstName: firstName, lastName: lastName, channelID: channelID)
         do {
             _ = try db.collection("contacts").addDocument(from: friend)
             completionHandler(.success(true))

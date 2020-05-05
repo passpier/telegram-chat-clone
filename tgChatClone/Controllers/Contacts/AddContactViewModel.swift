@@ -22,11 +22,11 @@ class AddContactViewModel {
             let firstChar = String(pair.firstName.prefix(1))
             let secondChar = String(pair.lastName.prefix(1))
             let name = firstChar + secondChar
-            return profileHelper.createPhotoWith(name: name).asDriver(onErrorJustReturn: nil)
+            return profileHelper.onPhotoChange(withName: name).asDriver(onErrorJustReturn: nil)
         }
         
         isContactCreated = createTap.withLatestFrom(userProfile).flatMapLatest { pair -> Driver<Bool> in
-            return messageService.addFriend(email: pair.email, name: "\(pair.firstName)\(pair.lastName)").asDriver(onErrorJustReturn: false)
+            return messageService.addFriend(email: pair.email, firstName: pair.firstName, lastName: pair.lastName).asDriver(onErrorJustReturn: false)
         }
     }
     

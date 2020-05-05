@@ -10,7 +10,7 @@ import UIKit
 
 class ContactUserCell: UITableViewCell {
     
-    private lazy var photo: UIImageView = {
+    lazy var userPhoto: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.backgroundColor = .lightGray
@@ -55,7 +55,7 @@ class ContactUserCell: UITableViewCell {
         nameStack.axis = .vertical
         nameStack.translatesAutoresizingMaskIntoConstraints = false
         
-        let mainStack = UIStackView(arrangedSubviews: [photo, nameStack])
+        let mainStack = UIStackView(arrangedSubviews: [userPhoto, nameStack])
         mainStack.axis = .horizontal
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         mainStack.spacing = 10

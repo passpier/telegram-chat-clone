@@ -135,8 +135,8 @@ class SignInViewController: UIViewController {
             loginImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
             
             stack.topAnchor.constraint(equalTo: loginImageView.bottomAnchor, constant: 30),
-            stack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
-            stack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             
             signUpHint.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             signUpHint.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)
