@@ -14,3 +14,10 @@ extension UITableViewCell {
         return String(describing: self)
     }
 }
+
+extension UICollectionViewCell {
+    
+    static func cellIdentifier() -> String {
+        return String(describing: self)
+    }
+}

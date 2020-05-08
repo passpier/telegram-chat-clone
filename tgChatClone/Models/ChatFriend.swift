@@ -9,7 +9,9 @@
 import UIKit
 
 protocol ChatFriendProtocol {
+    var friendId: String { get }
     var photo: UIImage? { get }
     var name: String { get }
     var lastLogin: Date { get }
+    var channelId: String { get }
 }

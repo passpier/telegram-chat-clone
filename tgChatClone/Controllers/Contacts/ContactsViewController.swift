@@ -36,9 +36,9 @@ class ContactsViewController: UIViewController {
     
     private func bindViewModel() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let messageService = MessageService()
+        let friendService = FriendService()
         let profileHelper = ProfileHelper()
-        viewModel = ContactsViewModel(uid: uid, messageService: messageService, profileHelper: profileHelper)
+        viewModel = ContactsViewModel(uid: uid, friendService: friendService, profileHelper: profileHelper)
         viewModel?.contactPresentItems.drive(tableView.rx.items(cellIdentifier: ContactUserCell.cellIdentifier(), cellType: ContactUserCell.self)) { (tv, contactItem, cell) in
             cell.userPhoto.image = contactItem.photo
             cell.userLabel.text = contactItem.name

@@ -9,8 +9,10 @@
 import UIKit
 
 struct ChatPresentItem: ChatFriendProtocol {
+    var friendId: String
     var photo: UIImage?
     var name: String
     var lastLogin: Date
     var lastMessage: String
+    var channelId: String
 }

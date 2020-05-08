@@ -20,7 +20,7 @@ protocol AuthProtocol {
 }
 
 struct UserProfile: Codable  {
-    
+    let uid: String?
     let firstName: String?
     let lastName: String?
     let email: String?
@@ -28,6 +28,7 @@ struct UserProfile: Codable  {
     let profileImageUrl: String?
     
     enum CodingKeys: String, CodingKey {
+        case uid
         case firstName = "first_name"
         case lastName = "last_name"
         case email
@@ -62,7 +63,7 @@ class AuthService: AuthProtocol {
                     print("Error: ", error.localizedDescription)
                     observer.onError(error)
                 } else if let uid = authResult?.user.uid {
-                    let profile = UserProfile(firstName: firstName, lastName: lastName, email: email.lowercased(), phoneNumbers: "", profileImageUrl: "")
+                    let profile = UserProfile(uid: uid,firstName: firstName, lastName: lastName, email: email.lowercased(), phoneNumbers: "", profileImageUrl: "")
                     self?.createNewUser(withUid: uid, profile: profile) { result in
                         switch result {
                         case .success(let success):

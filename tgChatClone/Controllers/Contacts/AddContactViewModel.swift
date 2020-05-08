@@ -16,7 +16,7 @@ class AddContactViewModel {
     let friendPhoto: Driver<UIImage?>
     let isContactCreated: Driver<Bool>
     
-    init(firstName: Driver<String>, lastName: Driver<String>, email: Driver<String>, createTap: Signal<Void>, profileHelper: ProfileHelperProtocol, messageService: MessageProtocol) {
+    init(firstName: Driver<String>, lastName: Driver<String>, email: Driver<String>, createTap: Signal<Void>, profileHelper: ProfileHelperProtocol, friendService: FriendProtocol) {
         let userProfile = Driver.combineLatest(firstName, lastName, email) { (firstName: $0, lastName: $1, email: $2) }
         friendPhoto = userProfile.flatMapLatest { pair -> Driver<UIImage?> in
             let firstChar = String(pair.firstName.prefix(1))
@@ -26,7 +26,7 @@ class AddContactViewModel {
         }
         
         isContactCreated = createTap.withLatestFrom(userProfile).flatMapLatest { pair -> Driver<Bool> in
-            return messageService.addFriend(email: pair.email, firstName: pair.firstName, lastName: pair.lastName).asDriver(onErrorJustReturn: false)
+            return friendService.addFriend(email: pair.email, firstName: pair.firstName, lastName: pair.lastName).asDriver(onErrorJustReturn: false)
         }
     }
     

@@ -8,16 +8,10 @@
 
 import UIKit
 
-struct ContactItem {
-    var firstName: String
-    var lastName: String
-    var lastLogin: Date
-}
-
 struct ContactPresentItem: ChatFriendProtocol {
+    var friendId: String
     var photo: UIImage?
     var name: String
     var lastLogin: Date
+    var channelId: String
 }
-
-

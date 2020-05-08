@@ -72,8 +72,8 @@ class AddContactViewController: UIViewController {
     
     private func bindViewModel() {
         let profileHelper = ProfileHelper()
-        let messageService = MessageService()
-        viewModel = AddContactViewModel(firstName: firstNameField.rx.text.orEmpty.asDriver(), lastName: lastNameField.rx.text.orEmpty.asDriver(), email: emailField.rx.text.orEmpty.asDriver(), createTap: createBtn.rx.tap.asSignal(),profileHelper: profileHelper, messageService: messageService)
+        let friendService = FriendService()
+        viewModel = AddContactViewModel(firstName: firstNameField.rx.text.orEmpty.asDriver(), lastName: lastNameField.rx.text.orEmpty.asDriver(), email: emailField.rx.text.orEmpty.asDriver(), createTap: createBtn.rx.tap.asSignal(),profileHelper: profileHelper, friendService: friendService)
         viewModel?.friendPhoto.drive(photo.rx.image).disposed(by: disposeBag)
         viewModel?.isContactCreated.drive(onNext: { success in
             print("Create new contact \(success)")
