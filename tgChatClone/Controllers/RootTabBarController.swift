@@ -10,11 +10,15 @@ import UIKit
 import FirebaseAuth
 
 class RootTabBarController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupTabBarView()
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        AuthService().fetchUserProfile(withUid: uid)
 
     }
     

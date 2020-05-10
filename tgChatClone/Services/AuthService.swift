@@ -19,24 +19,6 @@ protocol AuthProtocol {
     func signout() -> Observable<Bool>
 }
 
-struct UserProfile: Codable  {
-    let uid: String?
-    let firstName: String?
-    let lastName: String?
-    let email: String?
-    let phoneNumbers: String?
-    let profileImageUrl: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case uid
-        case firstName = "first_name"
-        case lastName = "last_name"
-        case email
-        case phoneNumbers = "phone_numbers"
-        case profileImageUrl = "profile_image_url"
-    }
-}
-
 class AuthService: AuthProtocol {
     
     func signin(email: String, password: String) -> Observable<Bool> {
@@ -63,7 +45,7 @@ class AuthService: AuthProtocol {
                     print("Error: ", error.localizedDescription)
                     observer.onError(error)
                 } else if let uid = authResult?.user.uid {
-                    let profile = UserProfile(uid: uid,firstName: firstName, lastName: lastName, email: email.lowercased(), phoneNumbers: "", profileImageUrl: "")
+                    let profile = UserProfile(uid: uid,firstName: firstName, lastName: lastName, email: email.lowercased())
                     self?.createNewUser(withUid: uid, profile: profile) { result in
                         switch result {
                         case .success(let success):
@@ -98,9 +80,35 @@ class AuthService: AuthProtocol {
         }
     }
     
+    func fetchUserProfile(withUid uid: String) {
+        let db = Firestore.firestore()
+        db.collection("users").document(uid).getDocument { (document, error) in
+            if let document = document, document.exists {
+                let result = Result {
+                    try document.data(as: UserProfile.self)
+                }
+                switch result {
+                case .success(let userProfile):
+                    guard let userProfile = userProfile else { return }
+                    let user = UserProfile.shared
+                    user.uid = userProfile.uid
+                    user.email = userProfile.email
+                    user.firstName = userProfile.firstName
+                    user.lastName = userProfile.lastName
+                    user.email = userProfile.email
+                    user.phoneNumbers = userProfile.phoneNumbers
+                    user.profileImageUrl = userProfile.profileImageUrl
+                    print("user: \(user)")
+                case .failure(let error):
+                    print("Error decoding message: \(error)")
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+    
     private func createNewUser(withUid uid: String, profile: UserProfile, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-        print("uid: \(uid)")
-        print("profile: \(profile)")
         let db = Firestore.firestore()
         do {
             try db.collection("users").document(uid).setData(from: profile)

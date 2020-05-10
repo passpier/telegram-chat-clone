@@ -30,16 +30,12 @@ class SettingsViewController: UIViewController {
     private func bindViewModel() {
         let authService = AuthService()
         viewModel = SettingsViewModel(signoutTap: signoutBtn.rx.tap.asSignal(), authService: authService)
-        viewModel?.signedOut.drive(onNext: { [weak self] signedOut in
+        viewModel?.signedOut.drive(onNext: { signedOut in
             guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-            guard let nav = window.rootViewController as? UINavigationController else { return }
-            if (nav.viewControllers.first as? RootTabBarController) != nil {
-                let signinVC = UINavigationController(rootViewController: SignInViewController())
-                signinVC.modalPresentationStyle = .fullScreen
-                self?.present(signinVC, animated: false, completion: nil)
-            } else {
-                self?.dismiss(animated: false, completion: nil)
-            }
+            let nav = UINavigationController(rootViewController: SignInViewController())
+            nav.navigationBar.isHidden = true
+            window.rootViewController = nav
+            window.makeKeyAndVisible()
         }).disposed(by: disposeBag)
     }
     

@@ -104,11 +104,15 @@ class FriendService: FriendProtocol {
     }
     
     private func addFriendToFirestore(friendId: String, firstName: String, lastName: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid =  UserProfile.shared.uid else { return }
         let channelID = UUID().uuidString
-        let friend = Friend(uid: uid, friendId: friendId, firstName: firstName, lastName: lastName, channelID: channelID)
+        let myProfile = UserProfile.shared
+        let myContact = Friend(uid: uid, friendId: friendId, firstName: firstName, lastName: lastName, channelID: channelID)
+        let friendContact = Friend(uid: friendId, friendId: uid, firstName: myProfile.firstName, lastName: myProfile.lastName, channelID: channelID)
         do {
-            _ = try db.collection("contacts").addDocument(from: friend)
+            let ref = db.collection("contacts")
+            _ = try ref.addDocument(from: myContact)
+            _ = try ref.addDocument(from: friendContact)
             completionHandler(.success(true))
         } catch let error {
             print("Error writing contacts to Firestore: \(error)")
