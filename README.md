@@ -1,7 +1,10 @@
 # telegram-chat-clone
 
-Build a chat app with iOS 13 using RxSwift and Firebase. 
+Build a chat app with iOS 13 using RxSwift and Firebase. The app rely on Firebase Auth and Firebase Firestore.
 
 Remind me to download `GoogleService-Info.plist`
 
-![alt text](https://github.com/passpier/telegram-chat-clone/blob/master/Resources/螢幕快照%202020-05-08%20下午5.26.31.png?raw=true)
+![sign in](https://github.com/passpier/telegram-chat-clone/blob/master/Resources/snapshot-101608.png?raw=true)
+
+![chat message](https://github.com/passpier/telegram-chat-clone/blob/master/Resources/snapshot-101547.png?raw=true)
+
